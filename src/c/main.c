@@ -20,7 +20,6 @@ typedef struct {
 static Window *s_main_window;
 static Layer *s_canvas_layer;
 
-static GBitmap *s_sprite_sheet_bitmap;
 static GBitmap *s_frog_bitmap;
 static GBitmap *s_splat_bitmap;
 static GBitmap *s_log_bitmap;
@@ -32,6 +31,7 @@ static GBitmap *s_car_bitmap_r_down;
 static GBitmap *s_car_bitmap_g_down;
 static GBitmap *s_car_bitmap_b_down;
 static GBitmap *s_headlight_bitmap;
+static GBitmap *s_sprite_sheet_bitmap;
 static GBitmap *s_current_frog_bitmap; 
 
 static AppTimer *s_game_timer;
@@ -55,7 +55,6 @@ static bool s_is_paused = false;
 // --- FORWARD DECLARATIONS ---
 static void game_loop(void *data);
 static void select_click_handler(ClickRecognizerRef recognizer, void *context);
-
 
 // --- INIT LEVEL ---
 
@@ -120,7 +119,6 @@ static void init_platforms() {
 
 static void canvas_update_proc(Layer *layer, GContext *ctx) {
   graphics_context_set_fill_color(ctx, GColorBlack);
-  graphics_context_set_compositing_mode(ctx, GCompOpSet);
   graphics_fill_rect(ctx, layer_get_bounds(layer), 0, GCornerNone);
 
   #ifdef PBL_COLOR
@@ -455,33 +453,31 @@ static void main_window_load(Window *window) {
   layer_add_child(window_layer, s_canvas_layer);
   
   s_sprite_sheet_bitmap = gbitmap_create_with_resource(RESOURCE_ID_SPRITES);
-  s_frog_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(0,0,16, 16));
-  s_lilypad_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(16,0,16, 16));
-  s_splat_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(32,0,16, 16));
+  s_frog_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(0, 0, 16, 16));
+  s_lilypad_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(16, 0, 16, 16));
+  s_splat_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(32, 0, 16, 16));
   s_headlight_bitmap=gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(48, 0, 16, 16));
-  
+  s_log_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(0, 16, 16, 48));
+
   #ifdef PBL_COLOR
-  int x = 0;
-  int y = 16;
-  s_car_bitmap_r_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
-  s_car_bitmap_g_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
-  s_car_bitmap_b_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
-  x = 0;
-  y = 32;
-  s_car_bitmap_r_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
-  s_car_bitmap_g_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
-  s_car_bitmap_b_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+    int x = 0;
+    int y = 16;
+    s_car_bitmap_r_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+    s_car_bitmap_g_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+    s_car_bitmap_b_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+    x = 0;
+    y = 32;
+    s_car_bitmap_r_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+    s_car_bitmap_g_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+    s_car_bitmap_b_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
   #else
-    s_car_bitmap_r_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(16,16, 16, 16));
+    s_car_bitmap_r_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(16, 16, 16, 16));
     s_car_bitmap_g_up = s_car_bitmap_r_up;
     s_car_bitmap_b_up = s_car_bitmap_r_up;
-  
-  s_car_bitmap_r_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(16,32, 16, 16));
+    s_car_bitmap_r_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(16, 32, 16, 16));
     s_car_bitmap_g_down = s_car_bitmap_r_down;
     s_car_bitmap_b_down = s_car_bitmap_r_down;
   #endif
-
-  s_log_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(0, 16, 16, 48));
 
   s_current_frog_bitmap = s_frog_bitmap;
   s_frog_y_scaled = (s_screen_h / 2) * 10;
