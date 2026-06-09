@@ -4,110 +4,6 @@
 #define MAX_ENTITIES 30 
 #define ENTITIES_PER_LANE 2 
 
-// --- 16-PIXEL BITMAP DATA ---
-
-static const uint8_t frog_bitmap_data[] = {
-  0b00000000, 0b00000000, 0, 0,
-  0b00011000, 0b00011000, 0, 0, 
-  0b00111100, 0b00111100, 0, 0, 
-  0b00011111, 0b11111000, 0, 0, 
-  0b00001111, 0b11110000, 0, 0, 
-  0b00001111, 0b11110000, 0, 0,
-  0b01101111, 0b11110110, 0, 0, 
-  0b01101111, 0b11110110, 0, 0,
-  0b00001111, 0b11110000, 0, 0, 
-  0b00001111, 0b11110000, 0, 0,
-  0b00001111, 0b11110000, 0, 0,
-  0b00001111, 0b11110000, 0, 0,
-  0b00111111, 0b11111100, 0, 0, 
-  0b01111000, 0b00011110, 0, 0, 
-  0b01100000, 0b00000110, 0, 0, 
-  0b00000000, 0b00000000, 0, 0
-};
-
-static const uint8_t splat_bitmap_data[] = {
-  0b00000000, 0b00000000, 0, 0,
-  0b00010000, 0b00001000, 0, 0,
-  0b00001010, 0b01000000, 0, 0,
-  0b00000111, 0b10000000, 0, 0,
-  0b01001111, 0b11010000, 0, 0,
-  0b00111111, 0b11100000, 0, 0,
-  0b00011111, 0b11110010, 0, 0,
-  0b10111111, 0b11111000, 0, 0,
-  0b00011111, 0b11111001, 0, 0,
-  0b01001111, 0b11110000, 0, 0,
-  0b00000111, 0b11100100, 0, 0,
-  0b00000011, 0b11000000, 0, 0,
-  0b00101010, 0b00100000, 0, 0,
-  0b00010000, 0b00010000, 0, 0,
-  0b00000000, 0b00000000, 0, 0,
-  0b00000000, 0b00000000, 0, 0
-};
-
-static const uint8_t lilypad_bitmap_data[] = {
-  0b00000111, 0b11100000, 0, 0,
-  0b00011111, 0b11111000, 0, 0,
-  0b00111111, 0b11111100, 0, 0,
-  0b01111111, 0b11111110, 0, 0,
-  0b01111111, 0b11111110, 0, 0,
-  0b11111111, 0b11111111, 0, 0,
-  0b11111000, 0b01111111, 0, 0,
-  0b11110000, 0b00111111, 0, 0,
-  0b11110000, 0b00111111, 0, 0,
-  0b11111000, 0b01111111, 0, 0,
-  0b11111111, 0b11111111, 0, 0,
-  0b01111111, 0b11111110, 0, 0,
-  0b01111111, 0b11111110, 0, 0,
-  0b00111111, 0b11111100, 0, 0,
-  0b00011111, 0b11111000, 0, 0,
-  0b00000111, 0b11100000, 0, 0
-};
-
-static const uint8_t car_bitmap_data[] = {
-  0b00000000, 0b00000000, 0, 0,
-  0b00111111, 0b11111100, 0, 0,
-  0b01100000, 0b00000110, 0, 0, 
-  0b01111111, 0b11111110, 0, 0, 
-  0b01111111, 0b11111110, 0, 0, 
-  0b01111111, 0b11111110, 0, 0, 
-  0b01111111, 0b11111110, 0, 0, 
-  0b01100000, 0b00000110, 0, 0, 
-  0b01111111, 0b11111110, 0, 0, 
-  0b01111111, 0b11111110, 0, 0, 
-  0b00111111, 0b11111100, 0, 0, 
-  0b00000000, 0b00000000, 0, 0,
-  0b00000000, 0b00000000, 0, 0,
-  0b00000000, 0b00000000, 0, 0,
-  0b00000000, 0b00000000, 0, 0,
-  0b00000000, 0b00000000, 0, 0
-};
-
-static const uint8_t log_bitmap_data[] = {
-  0b00111111, 0b11111100, 0, 0, 0b01111111, 0b11111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b01111101, 0b10111110, 0, 0,
-  0b01111011, 0b11011110, 0, 0, 0b01101111, 0b11110110, 0, 0,
-  0b01111111, 0b11111110, 0, 0, 0b00111111, 0b11111100, 0, 0
-};
-
 // --- DATA STRUCTURES ---
 
 typedef struct {
@@ -124,11 +20,18 @@ typedef struct {
 static Window *s_main_window;
 static Layer *s_canvas_layer;
 
+static GBitmap *s_sprite_sheet_bitmap;
 static GBitmap *s_frog_bitmap;
 static GBitmap *s_splat_bitmap;
 static GBitmap *s_log_bitmap;
 static GBitmap *s_lilypad_bitmap;
-static GBitmap *s_car_bitmap;
+static GBitmap *s_car_bitmap_r_up;
+static GBitmap *s_car_bitmap_g_up;
+static GBitmap *s_car_bitmap_b_up;
+static GBitmap *s_car_bitmap_r_down;
+static GBitmap *s_car_bitmap_g_down;
+static GBitmap *s_car_bitmap_b_down;
+static GBitmap *s_headlight_bitmap;
 static GBitmap *s_current_frog_bitmap; 
 
 static AppTimer *s_game_timer;
@@ -152,6 +55,11 @@ static bool s_is_paused = false;
 // --- FORWARD DECLARATIONS ---
 static void game_loop(void *data);
 static void select_click_handler(ClickRecognizerRef recognizer, void *context);
+
+
+static int from_scaled(int y_scaled) {
+  return (y_scaled + 5) / 10;
+}
 
 // --- INIT LEVEL ---
 
@@ -216,6 +124,7 @@ static void init_platforms() {
 
 static void canvas_update_proc(Layer *layer, GContext *ctx) {
   graphics_context_set_fill_color(ctx, GColorBlack);
+  graphics_context_set_compositing_mode(ctx, GCompOpSet);
   graphics_fill_rect(ctx, layer_get_bounds(layer), 0, GCornerNone);
 
   #ifdef PBL_COLOR
@@ -269,45 +178,45 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
       graphics_draw_line(ctx, GPoint(mid_x, 0), GPoint(mid_x, s_screen_h));
     }
   #endif
-
+    
   graphics_context_set_compositing_mode(ctx, GCompOpSet);
 
   for (int i = 0; i < s_total_entities; i++) {
-    int actual_y = s_platforms[i].y_scaled / 10;
+    int actual_y = from_scaled(s_platforms[i].y_scaled);
     
     int plat_h = 16;
     if (!s_platforms[i].is_car && !s_platforms[i].is_lilypad) plat_h = 48; 
     
     GRect bounds = GRect(s_platforms[i].x, actual_y, 16, plat_h);
     
-    #ifdef PBL_COLOR
-      if (s_platforms[i].is_car) {
-        if (s_platforms[i].car_color == 0) graphics_context_set_fill_color(ctx, GColorRed);
-        else if (s_platforms[i].car_color == 1) graphics_context_set_fill_color(ctx, GColorPictonBlue);
-        else graphics_context_set_fill_color(ctx, GColorKellyGreen);
-      } else if (s_platforms[i].is_lilypad) {
-        graphics_context_set_fill_color(ctx, GColorKellyGreen);
-      } else {
-        graphics_context_set_fill_color(ctx, GColorWindsorTan);
-      }
-      graphics_fill_rect(ctx, bounds, 0, GCornerNone);
-    #endif
-
     GBitmap *bmp;
     if (s_platforms[i].is_car) {
-      bmp = s_car_bitmap;
+      
+      bool moving_up = s_platforms[i].speed_scaled < 0;
+      
+      
+      graphics_draw_bitmap_in_rect(ctx,s_headlight_bitmap, GRect(s_platforms[i].x, actual_y + 16 * (moving_up ? -1 : 1), 16, 16));
+      
+      switch (s_platforms[i].car_color) {
+        case 0:
+          bmp = moving_up ? s_car_bitmap_r_up : s_car_bitmap_r_down;
+          break;  
+        case 1:
+          bmp = moving_up ? s_car_bitmap_g_up : s_car_bitmap_g_down;
+          break;  
+        default:
+          bmp = moving_up ? s_car_bitmap_b_up : s_car_bitmap_b_down;
+          break;  
+      }
     } else {
       bmp = s_platforms[i].is_lilypad ? s_lilypad_bitmap : s_log_bitmap;
     }
     graphics_draw_bitmap_in_rect(ctx, bmp, bounds);
   }
 
-  int frog_actual_y = s_frog_y_scaled / 10;
+  int frog_actual_y = from_scaled(s_frog_y_scaled);
   
   GRect highlight_bounds = GRect(s_frog_x, frog_actual_y, 16, 16);
-  graphics_context_set_fill_color(ctx, GColorBlack);
-  graphics_fill_rect(ctx, highlight_bounds, 0, GCornerNone); 
-
   graphics_draw_bitmap_in_rect(ctx, s_current_frog_bitmap, highlight_bounds);
 
   char ui_buffer[32];
@@ -373,7 +282,7 @@ static void kill_frog() {
 static void check_collisions() {
   if (s_is_dead) return; 
 
-  int frog_actual_y = s_frog_y_scaled / 10;
+  int frog_actual_y = from_scaled(s_frog_y_scaled);
 
   if (s_frog_x == 0 || s_frog_x >= s_right_shore_x) return; 
 
@@ -389,7 +298,7 @@ static void check_collisions() {
   if (in_highway_zone) {
     for (int i = 0; i < s_total_entities; i++) {
       if (s_frog_x == s_platforms[i].x) {
-        int plat_actual_y = s_platforms[i].y_scaled / 10;
+        int plat_actual_y = from_scaled(s_platforms[i].y_scaled);
         int plat_h = 16; 
         
         int frog_center_y = frog_actual_y + 8;
@@ -403,7 +312,7 @@ static void check_collisions() {
     bool safe_on_platform = false;
     for (int i = 0; i < s_total_entities; i++) {
       if (s_frog_x == s_platforms[i].x) {
-        int plat_actual_y = s_platforms[i].y_scaled / 10;
+        int plat_actual_y = from_scaled(s_platforms[i].y_scaled);
         int plat_h = s_platforms[i].is_lilypad ? 16 : 48; 
         
         int frog_center_y = frog_actual_y + 8;
@@ -429,15 +338,17 @@ static void game_loop(void *data) {
   for (int i = 0; i < s_total_entities; i++) {
     s_platforms[i].y_scaled += s_platforms[i].speed_scaled;
     
-    int actual_y = s_platforms[i].y_scaled / 10;
+    int actual_y = from_scaled(s_platforms[i].y_scaled);
     
     int plat_h = 16;
     if (!s_platforms[i].is_car && !s_platforms[i].is_lilypad) plat_h = 48;
 
     if (s_platforms[i].speed_scaled > 0 && actual_y > s_screen_h) {
       s_platforms[i].y_scaled = -plat_h * 10; 
+      if (s_platforms[i].is_car) {s_platforms[i].car_color = rand() % 3;}
     } else if (s_platforms[i].speed_scaled < 0 && actual_y < -plat_h) {
       s_platforms[i].y_scaled = s_screen_h * 10; 
+      if (s_platforms[i].is_car) {s_platforms[i].car_color = rand() % 3;}
     }
   }
 
@@ -460,7 +371,7 @@ static void app_focus_handler(bool in_focus) {
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
   if (s_is_dead || s_lives <= 0 || s_is_paused) return; 
-  if ((s_frog_y_scaled / 10) > 16) { 
+  if ((from_scaled(s_frog_y_scaled)) > 16) { 
     s_frog_y_scaled -= 16 * 10; 
     layer_mark_dirty(s_canvas_layer);
   }
@@ -468,7 +379,7 @@ static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
   if (s_is_dead || s_lives <= 0 || s_is_paused) return; 
-  if ((s_frog_y_scaled / 10) < s_screen_h - 16) { 
+  if ((from_scaled(s_frog_y_scaled)) < s_screen_h - 16) { 
     s_frog_y_scaled += 16 * 10;
     layer_mark_dirty(s_canvas_layer);
   }
@@ -548,21 +459,35 @@ static void main_window_load(Window *window) {
   s_canvas_layer = layer_create(bounds);
   layer_set_update_proc(s_canvas_layer, canvas_update_proc);
   layer_add_child(window_layer, s_canvas_layer);
-
-  s_frog_bitmap = gbitmap_create_blank(GSize(16, 16), GBitmapFormat1Bit);
-  memcpy(gbitmap_get_data(s_frog_bitmap), frog_bitmap_data, sizeof(frog_bitmap_data));
-
-  s_splat_bitmap = gbitmap_create_blank(GSize(16, 16), GBitmapFormat1Bit);
-  memcpy(gbitmap_get_data(s_splat_bitmap), splat_bitmap_data, sizeof(splat_bitmap_data));
-
-  s_lilypad_bitmap = gbitmap_create_blank(GSize(16, 16), GBitmapFormat1Bit);
-  memcpy(gbitmap_get_data(s_lilypad_bitmap), lilypad_bitmap_data, sizeof(lilypad_bitmap_data));
   
-  s_car_bitmap = gbitmap_create_blank(GSize(16, 16), GBitmapFormat1Bit);
-  memcpy(gbitmap_get_data(s_car_bitmap), car_bitmap_data, sizeof(car_bitmap_data));
+  s_sprite_sheet_bitmap = gbitmap_create_with_resource(RESOURCE_ID_SPRITES);
+  s_frog_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(0,0,16, 16));
+  s_lilypad_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(16,0,16, 16));
+  s_splat_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(32,0,16, 16));
+  s_headlight_bitmap=gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(48, 0, 16, 16));
+  
+  #ifdef PBL_COLOR
+  int x = 0;
+  int y = 16;
+  s_car_bitmap_r_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+  s_car_bitmap_g_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+  s_car_bitmap_b_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+  x = 0;
+  y = 32;
+  s_car_bitmap_r_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+  s_car_bitmap_g_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+  s_car_bitmap_b_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(x += 16, y, 16, 16));
+  #else
+    s_car_bitmap_r_up = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(16,16, 16, 16));
+    s_car_bitmap_g_up = s_car_bitmap_r_up;
+    s_car_bitmap_b_up = s_car_bitmap_r_up;
+  
+  s_car_bitmap_r_down = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(16,32, 16, 16));
+    s_car_bitmap_g_down = s_car_bitmap_r_down;
+    s_car_bitmap_b_down = s_car_bitmap_r_down;
+  #endif
 
-  s_log_bitmap = gbitmap_create_blank(GSize(16, 48), GBitmapFormat1Bit);
-  memcpy(gbitmap_get_data(s_log_bitmap), log_bitmap_data, sizeof(log_bitmap_data));
+  s_log_bitmap = gbitmap_create_as_sub_bitmap(s_sprite_sheet_bitmap, GRect(0, 16, 16, 48));
 
   s_current_frog_bitmap = s_frog_bitmap;
   s_frog_y_scaled = (s_screen_h / 2) * 10;
@@ -575,7 +500,14 @@ static void main_window_unload(Window *window) {
   gbitmap_destroy(s_splat_bitmap);
   gbitmap_destroy(s_log_bitmap);
   gbitmap_destroy(s_lilypad_bitmap);
-  gbitmap_destroy(s_car_bitmap);
+  gbitmap_destroy(s_headlight_bitmap);
+  gbitmap_destroy(s_car_bitmap_r_up);
+  gbitmap_destroy(s_car_bitmap_g_up);
+  gbitmap_destroy(s_car_bitmap_b_up);
+  gbitmap_destroy(s_car_bitmap_r_down);
+  gbitmap_destroy(s_car_bitmap_g_down);
+  gbitmap_destroy(s_car_bitmap_b_down);
+  gbitmap_destroy(s_sprite_sheet_bitmap);
   layer_destroy(s_canvas_layer);
 }
 
