@@ -57,10 +57,6 @@ static void game_loop(void *data);
 static void select_click_handler(ClickRecognizerRef recognizer, void *context);
 
 
-static int from_scaled(int y_scaled) {
-  return (y_scaled + 5) / 10;
-}
-
 // --- INIT LEVEL ---
 
 static void init_platforms() {
@@ -178,11 +174,11 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
       graphics_draw_line(ctx, GPoint(mid_x, 0), GPoint(mid_x, s_screen_h));
     }
   #endif
-    
+
   graphics_context_set_compositing_mode(ctx, GCompOpSet);
 
   for (int i = 0; i < s_total_entities; i++) {
-    int actual_y = from_scaled(s_platforms[i].y_scaled);
+    int actual_y = s_platforms[i].y_scaled / 10;
     
     int plat_h = 16;
     if (!s_platforms[i].is_car && !s_platforms[i].is_lilypad) plat_h = 48; 
@@ -191,9 +187,7 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
     
     GBitmap *bmp;
     if (s_platforms[i].is_car) {
-      
-      bool moving_up = s_platforms[i].speed_scaled < 0;
-      
+      bool moving_up = s_platforms[i].speed_scaled < 0;      
       
       graphics_draw_bitmap_in_rect(ctx,s_headlight_bitmap, GRect(s_platforms[i].x, actual_y + 16 * (moving_up ? -1 : 1), 16, 16));
       
@@ -214,7 +208,7 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
     graphics_draw_bitmap_in_rect(ctx, bmp, bounds);
   }
 
-  int frog_actual_y = from_scaled(s_frog_y_scaled);
+  int frog_actual_y = s_frog_y_scaled / 10;
   
   GRect highlight_bounds = GRect(s_frog_x, frog_actual_y, 16, 16);
   graphics_draw_bitmap_in_rect(ctx, s_current_frog_bitmap, highlight_bounds);
@@ -282,7 +276,7 @@ static void kill_frog() {
 static void check_collisions() {
   if (s_is_dead) return; 
 
-  int frog_actual_y = from_scaled(s_frog_y_scaled);
+  int frog_actual_y = s_frog_y_scaled / 10;
 
   if (s_frog_x == 0 || s_frog_x >= s_right_shore_x) return; 
 
@@ -298,7 +292,7 @@ static void check_collisions() {
   if (in_highway_zone) {
     for (int i = 0; i < s_total_entities; i++) {
       if (s_frog_x == s_platforms[i].x) {
-        int plat_actual_y = from_scaled(s_platforms[i].y_scaled);
+        int plat_actual_y = s_platforms[i].y_scaled / 10;
         int plat_h = 16; 
         
         int frog_center_y = frog_actual_y + 8;
@@ -312,7 +306,7 @@ static void check_collisions() {
     bool safe_on_platform = false;
     for (int i = 0; i < s_total_entities; i++) {
       if (s_frog_x == s_platforms[i].x) {
-        int plat_actual_y = from_scaled(s_platforms[i].y_scaled);
+        int plat_actual_y = s_platforms[i].y_scaled / 10;
         int plat_h = s_platforms[i].is_lilypad ? 16 : 48; 
         
         int frog_center_y = frog_actual_y + 8;
@@ -338,7 +332,7 @@ static void game_loop(void *data) {
   for (int i = 0; i < s_total_entities; i++) {
     s_platforms[i].y_scaled += s_platforms[i].speed_scaled;
     
-    int actual_y = from_scaled(s_platforms[i].y_scaled);
+    int actual_y = s_platforms[i].y_scaled / 10;
     
     int plat_h = 16;
     if (!s_platforms[i].is_car && !s_platforms[i].is_lilypad) plat_h = 48;
@@ -371,7 +365,7 @@ static void app_focus_handler(bool in_focus) {
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
   if (s_is_dead || s_lives <= 0 || s_is_paused) return; 
-  if ((from_scaled(s_frog_y_scaled)) > 16) { 
+  if ((s_frog_y_scaled / 10) > 16) { 
     s_frog_y_scaled -= 16 * 10; 
     layer_mark_dirty(s_canvas_layer);
   }
@@ -379,7 +373,7 @@ static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
   if (s_is_dead || s_lives <= 0 || s_is_paused) return; 
-  if ((from_scaled(s_frog_y_scaled)) < s_screen_h - 16) { 
+  if ((s_frog_y_scaled / 10) < s_screen_h - 16) { 
     s_frog_y_scaled += 16 * 10;
     layer_mark_dirty(s_canvas_layer);
   }
